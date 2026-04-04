@@ -3,7 +3,7 @@ const express = require("express");
 const expressSession = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passport = require("passport");
-const { PrismaClient } = require("../generated/prisma/client.js")
+const { prisma } = require("./lib/prisma.js");
 const path = require("node:path");
 const app = express();
 const PORT = process.env.PORT;
@@ -19,7 +19,7 @@ app.use(expressSession({
     resave: true,
     saveUninitialized: true,
     store: new PrismaSessionStore(
-        new PrismaClient(),
+        prisma,
         {
             checkPeriod: 2 * 60 * 1000,
             dbRecordIdIsSessionId: true,
