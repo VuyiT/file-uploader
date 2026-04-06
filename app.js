@@ -6,6 +6,7 @@ const passport = require("passport");
 const { prisma } = require("./lib/prisma.js");
 const path = require("node:path");
 const globalErrorHandler = require("./middleware/errorMiddleware.js");
+const signUpRouter = require("./routes/signUpRouter.js");
 const app = express();
 const PORT = process.env.PORT;
 
@@ -32,6 +33,8 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => res.send("File Uploader"));
+
+app.use("/sign-up", signUpRouter);
 
 
 
