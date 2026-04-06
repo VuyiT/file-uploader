@@ -22,6 +22,7 @@ model User {
   password_hash String
   files File[]
   folders Folder[]
+  @@map("users")
 }
 
 model Folder {
@@ -33,6 +34,7 @@ model Folder {
   files File[]
   user User @relation(fields: [userId], references: [id])
   userId Int
+  @@map("folder")
 }
 
 model File {
@@ -46,4 +48,5 @@ model File {
   userId Int
   folder Folder? @relation(fields: [folderId], references: [id])
   folderId Int @unique
+  @@map("file")
 }
