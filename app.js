@@ -5,6 +5,7 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passport = require("passport");
 const { prisma } = require("./lib/prisma.js");
 const path = require("node:path");
+const globalErrorHandler = require("./middleware/errorMiddleware.js");
 const app = express();
 const PORT = process.env.PORT;
 
@@ -32,6 +33,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => res.send("File Uploader"));
 
+
+
+app.use(globalErrorHandler);
 
 app.listen(PORT, (err) => {
     if (err) {
