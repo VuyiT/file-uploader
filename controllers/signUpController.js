@@ -1,3 +1,8 @@
+const { validationResult, matchedData } = require("express-validator");
+const { validateUser } = require("../lib/userValidator");
+const bcrypt = require("bcryptjs");
+const prisma  = require("../lib/prisma.js");
+
 async function getSignUp(req, res, next) {
     try {
         res.render("sign-up-form", {
@@ -8,6 +13,35 @@ async function getSignUp(req, res, next) {
     }
 }
 
+const postSignUp = [
+    validateUser,
+    async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("sign-up-form", {
+                title: "Sign Up",
+                errors: errors.array(),
+            })
+        }
+        try {
+            const { firstName, lastName, email, password } = matchedData(req);
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await prisma.user.create({
+                data: {
+                    firstName,
+                    lastName,
+                    email,
+                    password_hash: hashedPassword
+                }
+            });
+            res.redirect("/");
+        } catch (err) {
+            next(err);
+        }
+    }
+];
+
 module.exports = {
     getSignUp,
+    postSignUp,
 }
