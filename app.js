@@ -3,7 +3,7 @@ const express = require("express");
 const expressSession = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passport = require("passport");
-const { prisma } = require("./lib/prisma.js");
+const prisma = require("./lib/prisma.js");
 const path = require("node:path");
 const globalErrorHandler = require("./middleware/errorMiddleware.js");
 const signUpRouter = require("./routes/signUpRouter.js");
@@ -18,8 +18,8 @@ app.use(expressSession({
         maxAge: 7 * 24 * 60 * 60 * 1000
     },
     secret: process.env.SECRET,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     store: new PrismaSessionStore(
         prisma,
         {
