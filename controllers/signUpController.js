@@ -4,9 +4,16 @@ const bcrypt = require("bcryptjs");
 const prisma  = require("../lib/prisma.js");
 
 async function getSignUp(req, res, next) {
+    const oldInput = req.session.oldInput || {};
+    const errors = req.session.errors || [];
+
+    delete req.session.oldInput;
+    delete req.session.errors;
     try {
         res.render("sign-up-form", {
         title: "Sign Up",
+        oldInput,
+        errors,
     })
     } catch (err) {
         next(err);
@@ -18,10 +25,9 @@ const postSignUp = [
     async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).render("sign-up-form", {
-                title: "Sign Up",
-                errors: errors.array(),
-            })
+            req.session.oldInput = req.body;
+            req.session.errors = errors.array();
+            return res.redirect("/sign-up");
         }
         try {
             const { firstName, lastName, email, password } = matchedData(req);
