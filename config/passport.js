@@ -22,7 +22,7 @@ const strategy = new LocalStrategy(customFields,
             }
             const isMatch = await bcrypt.compare(password, user.password_hash);
             if (!isMatch) {
-                return done(null, false, { message: "incorrect password" });
+                return done(null, false, { message: "Incorrect password" });
             }
             return done(null, user);
         } catch (err) {
