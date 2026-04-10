@@ -7,6 +7,7 @@ const prisma = require("./lib/prisma.js");
 const path = require("node:path");
 const globalErrorHandler = require("./middleware/errorMiddleware.js");
 const signUpRouter = require("./routes/signUpRouter.js");
+const loginRouter = require("./routes/loginRouter.js");
 const app = express();
 const PORT = process.env.PORT;
 
@@ -54,6 +55,7 @@ app.use((req, res, next) => {
 })
 
 
+app.use("/log-in", loginRouter);
 app.use("/sign-up", signUpRouter);
 
 
