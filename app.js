@@ -34,6 +34,26 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => res.send("File Uploader"));
 
+app.use((req, res, next) => {
+    res.locals.success_msg = req.session.success_msg;
+    res.locals.error_msg = req.session.error_msg;
+    req.session.oldInput = req.body;
+    res.locals.oldInput = req.session.oldInput || {};
+    res.locals.errors = req.session.errors || [];
+
+    delete req.session.success_msg;
+    delete req.session.error_msg;
+    delete req.session.oldData;
+    delete req.session.errors;
+
+    req.flash = (type, msg) => {
+        if (type === "success") req.session.success_msg = msg;
+        if (type === "error") req.session.error_msg = msg;
+    };
+    next();
+})
+
+
 app.use("/sign-up", signUpRouter);
 
 

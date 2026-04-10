@@ -4,16 +4,9 @@ const bcrypt = require("bcryptjs");
 const prisma  = require("../lib/prisma.js");
 
 async function getSignUp(req, res, next) {
-    const oldInput = req.session.oldInput || {};
-    const errors = req.session.errors || [];
-
-    delete req.session.oldInput;
-    delete req.session.errors;
     try {
         res.render("sign-up-form", {
         title: "Sign Up",
-        oldInput,
-        errors,
     })
     } catch (err) {
         next(err);
