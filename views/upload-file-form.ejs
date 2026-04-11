@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head") %>
+<body>
+    <% if (currentUser) { %>
+     <h1><%= title %></h1>
+    <form action="/upload-file" method="post">
+        <label for="fileUpload">Upload a File: </label>
+        <input type="file" id="fileUpload" name="fileUpload" required>
+        <button type="submit">Upload</button>
+    </form>
+    <% } else { %>
+        <p>Sign up if you don't have an account or login to upload files!</p>
+    <% } %>
+</body>
+</html>
