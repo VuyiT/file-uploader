@@ -42,11 +42,12 @@ model File {
   name String? @default("Untitled file") @unique
   size Float
   type String
+  path String
   uploadedAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user User @relation(fields: [userId], references: [id])
   userId Int
   folder Folder? @relation(fields: [folderId], references: [id])
-  folderId Int @unique
+  folderId Int?
   @@map("file")
 }
