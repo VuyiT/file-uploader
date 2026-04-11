@@ -8,6 +8,7 @@ const path = require("node:path");
 const globalErrorHandler = require("./middleware/errorMiddleware.js");
 const signUpRouter = require("./routes/signUpRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
+const uploadRouter = require("./routes/uploadRouter.js");
 const app = express();
 const PORT = process.env.PORT;
 
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
     req.session.oldInput = req.body;
     res.locals.oldInput = req.session.oldInput || {};
     res.locals.errors = req.session.errors || [];
+    res.locals.currentUser = req.user;
 
     delete req.session.success_msg;
     delete req.session.error_msg;
@@ -54,7 +56,7 @@ app.use((req, res, next) => {
     next();
 })
 
-
+app.use("/upload-file", uploadRouter);
 app.use("/log-in", loginRouter);
 app.use("/sign-up", signUpRouter);
 
