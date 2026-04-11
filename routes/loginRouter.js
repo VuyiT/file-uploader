@@ -5,7 +5,7 @@ const loginController = require("../controllers/loginController");
 
 loginRouter.get("/", loginController.getLogin);
 loginRouter.post("/", passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/upload-file",
     failureRedirect: "/log-in",
     failureFlash: true,
 }));
