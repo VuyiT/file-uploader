@@ -15,6 +15,7 @@
     </nav>
     <% if (currentUser) { %>
      <h1><%= title %></h1>
+     <h2>Welcome <%= currentUser.firstName %>!</h2>
      <% if (locals.files && files.length > 0) { %>
         <ul>
             <% files.forEach(file => { %>
