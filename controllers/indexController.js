@@ -1,6 +1,6 @@
 const prisma = require("../lib/prisma");
 
-async function getIndex(req, res, next) {
+async function getHome(req, res, next) {
     try {
         const userId = req.user?.id;
         const files = userId ? await prisma.file.findMany({
@@ -16,5 +16,5 @@ async function getIndex(req, res, next) {
 }
 
 module.exports = {
-    getIndex,
+    getHome,
 }
