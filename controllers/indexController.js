@@ -6,9 +6,13 @@ async function getHome(req, res, next) {
         const files = userId ? await prisma.file.findMany({
             where: { userId: userId }
         }) : [];
+        const folders = userId ? await prisma.folder.findMany({
+            where: { userId: userId },
+        }) : [];
         res.render("index", {
             title: "Files and Folders",
             files,
+            folders,
         })
     } catch (err) {
         next(err);
