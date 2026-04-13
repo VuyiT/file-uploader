@@ -33,7 +33,7 @@ const postSignUp = [
                     password_hash: hashedPassword
                 }
             });
-            res.redirect("/");
+            res.redirect("/log-in");
         } catch (err) {
             next(err);
         }
