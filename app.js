@@ -9,6 +9,8 @@ const globalErrorHandler = require("./middleware/errorMiddleware.js");
 const signUpRouter = require("./routes/signUpRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
 const uploadRouter = require("./routes/uploadRouter.js");
+const indexRouter = require("./routes/indexRouter.js");
+const logoutRouter = require("./routes/logoutRouter.js");
 const app = express();
 const PORT = process.env.PORT;
 
@@ -33,16 +35,13 @@ app.use(expressSession({
 }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => res.send("File Uploader"));
-
 app.use((req, res, next) => {
     res.locals.success_msg = req.session.success_msg;
     res.locals.error_msg = req.session.error_msg;
     req.session.oldInput = req.body;
     res.locals.oldInput = req.session.oldInput || {};
     res.locals.errors = req.session.errors || [];
-    res.locals.currentUser = req.user;
+    res.locals.currentUser = req.user || null;
 
     delete req.session.success_msg;
     delete req.session.error_msg;
@@ -57,9 +56,10 @@ app.use((req, res, next) => {
 })
 
 app.use("/upload-file", uploadRouter);
+app.use("/log-out", logoutRouter);
 app.use("/log-in", loginRouter);
 app.use("/sign-up", signUpRouter);
-
+app.use("/", indexRouter);
 
 
 app.use(globalErrorHandler);
