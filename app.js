@@ -11,6 +11,7 @@ const loginRouter = require("./routes/loginRouter.js");
 const uploadRouter = require("./routes/uploadRouter.js");
 const indexRouter = require("./routes/indexRouter.js");
 const logoutRouter = require("./routes/logoutRouter.js");
+const folderRouter = require("./routes/folderRouter.js");
 const app = express();
 const PORT = process.env.PORT;
 
@@ -55,12 +56,12 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use("/create-folder", folderRouter);
 app.use("/upload-file", uploadRouter);
 app.use("/log-out", logoutRouter);
 app.use("/log-in", loginRouter);
 app.use("/sign-up", signUpRouter);
 app.use("/", indexRouter);
-
 
 app.use(globalErrorHandler);
 
