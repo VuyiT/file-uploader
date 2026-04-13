@@ -16,8 +16,11 @@
     <% if (currentUser) { %>
      <h1><%= title %></h1>
      <h2>Welcome <%= currentUser.firstName %>!</h2>
-     <% if (locals.files && files.length > 0) { %>
+     <% if (locals.files && files.length > 0 || locals.folders && folders.length > 0) { %>
         <ul>
+            <% folders.forEach(folder => { %>
+                <li><a href="#"><%= folder.name %></a></li>
+            <% }) %>
             <% files.forEach(file => { %>
                 <li><a href="<%= file.path %>"><%= file.name %></a></li>
             <% }) %>
