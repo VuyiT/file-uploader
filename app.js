@@ -56,7 +56,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use("/create-folder", folderRouter);
+app.use("/folder", folderRouter);
 app.use("/upload-file", uploadRouter);
 app.use("/log-out", logoutRouter);
 app.use("/log-in", loginRouter);
