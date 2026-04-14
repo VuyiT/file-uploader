@@ -3,18 +3,15 @@
 <%- include("./partials/head") %>
 <body>
     <h1><%= title %></h1>
-    <% if (locals.folder.files) { %>
-        <% if (folder.files.length > 0) { %>
-            <ul>
-                <% folder.files.forEach(file => { %>
-                    <li><%= file.name %></li>
-                 <% }) %>
-            </ul>
+    <% if (locals.folder.files && folder.files.length > 0) { %>
+        <ul>
+            <% folder.files.forEach(file => { %>
+                <li><%= file.name %></li>
+             <% }) %>
+        </ul>
         <% } else { %>
             <p><b>You have no files in this folder.</b></p>
         <% } %>
-        <a href="/folder/<%= folder.id %>/upload-file"><button>Upload File</button></a>
-    <% } %>
-
+    <a href="/folder/<%= folder.id %>/upload-file"><button>Upload File</button></a>
 </body>
 </html>
