@@ -49,8 +49,19 @@ async function getViewFolder(req, res, next) {
     }
 }
 
+async function getUploadFolderFileForm(req, res, next) {
+    try {
+        res.render("upload-file-form", {
+            title: "Upload File",
+        });
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     getCreateFolder,
     postFolder,
     getViewFolder,
+    getUploadFolderFileForm,
 }
