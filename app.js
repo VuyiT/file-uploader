@@ -8,7 +8,7 @@ const path = require("node:path");
 const globalErrorHandler = require("./middleware/errorMiddleware.js");
 const signUpRouter = require("./routes/signUpRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
-const uploadRouter = require("./routes/uploadRouter.js");
+const fileRouter = require("./routes/fileRouter.js");
 const indexRouter = require("./routes/indexRouter.js");
 const logoutRouter = require("./routes/logoutRouter.js");
 const folderRouter = require("./routes/folderRouter.js");
@@ -57,7 +57,7 @@ app.use((req, res, next) => {
 })
 
 app.use("/folder", folderRouter);
-app.use("/upload-file", uploadRouter);
+app.use("/file", fileRouter);
 app.use("/log-out", logoutRouter);
 app.use("/log-in", loginRouter);
 app.use("/sign-up", signUpRouter);
