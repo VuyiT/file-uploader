@@ -3,7 +3,7 @@ const fileController = require("../controllers/fileController");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
-fileRouter.get("/", fileController.getFileUploadForm);
-fileRouter.post("/", upload.single("uploadedFile"), fileController.postFile);
+fileRouter.get("/upload", fileController.getFileUploadForm);
+fileRouter.post("/upload", upload.single("uploadedFile"), fileController.postFile);
 
 module.exports = fileRouter;
