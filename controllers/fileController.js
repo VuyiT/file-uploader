@@ -1,6 +1,6 @@
 const prisma = require("../lib/prisma");
 
-async function getUpload(req, res, next) {
+async function getFileUploadForm(req, res, next) {
     try {
         res.render("upload-file-form", {
             title: "Upload File",
@@ -10,7 +10,7 @@ async function getUpload(req, res, next) {
     }
 }
 
-async function postUpload(req, res, next) {
+async function postFile(req, res, next) {
     try {
         const { originalname, size, mimetype, path } = req.file;
         await prisma.file.create({
@@ -33,6 +33,6 @@ async function postUpload(req, res, next) {
 }
 
 module.exports = {
-    getUpload,
-    postUpload,
+    getFileUploadForm,
+    postFile,
 }
