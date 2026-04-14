@@ -1,9 +1,9 @@
-const uploadRouter = require("express").Router();
-const uploadController = require("../controllers/fileController");
+const fileRouter = require("express").Router();
+const fileController = require("../controllers/fileController");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
-uploadRouter.get("/", uploadController.getUpload);
-uploadRouter.post("/", upload.single("uploadedFile"), uploadController.postUpload);
+fileRouter.get("/", fileController.getFileUploadForm);
+fileRouter.post("/", upload.single("uploadedFile"), fileController.postFile);
 
-module.exports = uploadRouter;
+module.exports = fileRouter;
