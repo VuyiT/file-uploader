@@ -89,10 +89,22 @@ async function postUpdate(req, res, next) {
     }
 }
 
+async function postDeleteFolder(req, res, next) {
+    try {
+        await prisma.folder.delete({
+            where: { id: Number(req.params.folderId) },
+        });
+        res.redirect("/");
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     getCreateFolder,
     postFolder,
     getViewFolder,
     getUpdateForm,
     postUpdate,
+    postDeleteFolder,
 }
