@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head") %>
+<body>
+    <% if (currentUser) { %>
+    <h1><%= title %></h1>
+    <form action="/folder/<%= folder.id %>/update" method="post">
+        <input type="text" name="folderName" value="<%= folder.name %>" required>
+        <button type="submit">Update</button>
+    </form>
+    <% } else { %>
+        <p><b>You have to log in to update folders!</b></p>
+        <nav>
+            <ul>
+                <li><a href="/log-in">Log In</a> Or</li>
+                <li><a href="/sign-up">Sign Up</a> if you don't have an account.</li>
+            </ul>
+        </nav>
+    <% } %>
+</body>
+</html>
