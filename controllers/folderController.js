@@ -96,6 +96,11 @@ async function postDeleteFolder(req, res, next) {
         });
         res.redirect("/");
     } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === "P2025") {
+                throw new NotFoundError("folder");
+            }
+        }
         next(err);
     }
 }
