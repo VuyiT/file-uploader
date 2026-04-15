@@ -4,6 +4,7 @@ async function getFileUploadForm(req, res, next) {
     try {
         res.render("upload-file-form", {
             title: "Upload File",
+            folderId: req.params.folderId || null,
         })
     } catch (err) {
         next(err);
@@ -12,6 +13,7 @@ async function getFileUploadForm(req, res, next) {
 
 async function postFile(req, res, next) {
     try {
+        const folderId = req.params?.folderId;
         const { originalname, size, mimetype, path } = req.file;
         await prisma.file.create({
             data: {
@@ -22,11 +24,14 @@ async function postFile(req, res, next) {
                 user: {
                     connect: {
                         id: req.user.id
-                    }
-                }
-            }
+                    },
+                },
+                folder: folderId ? {
+                    connect: { id: Number(folderId) },
+                } : undefined,
+            },
         });
-        res.redirect("/");
+        folderId ? res.redirect(`/folder/${folderId}`) : res.redirect("/");
     } catch (err) {
         next(err);
     }
