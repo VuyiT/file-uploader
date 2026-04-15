@@ -56,8 +56,21 @@ async function getViewFolder(req, res, next) {
     }
 }
 
+async function getUpdateForm(req, res, next) {
+    const folder = await prisma.folder.findUnique({ where: { id: Number(req.params.folderId) } });
+    try {
+        res.render("update-folder-form", {
+            title: "Update Folder",
+            folder,
+        })
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     getCreateFolder,
     postFolder,
     getViewFolder,
+    getUpdateForm,
 }
