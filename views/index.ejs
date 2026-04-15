@@ -29,7 +29,9 @@
                 </li>
             <% }) %>
             <% files.forEach(file => { %>
-                <li><a href="<%= file.path %>"><%= file.name %></a></li>
+                <% if (!file.folderId) { %>
+                    <li><a href="<%= file.path %>"><%= file.name %></a></li>
+                <% } %>
             <% }) %>
         </ul>
     <% } else { %>
