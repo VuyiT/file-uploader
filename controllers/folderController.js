@@ -68,9 +68,31 @@ async function getUpdateForm(req, res, next) {
     }
 }
 
+async function postUpdate(req, res, next) {
+    try {
+        await prisma.folder.update({
+            where: {
+                id: Number(req.params.folderId),
+            },
+            data: {
+                name: req.body.folderName,
+            },
+        });
+        res.redirect("/");
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === "P2025") {
+                throw new NotFoundError("folder");
+            }
+        }
+        next(err);
+    }
+}
+
 module.exports = {
     getCreateFolder,
     postFolder,
     getViewFolder,
     getUpdateForm,
+    postUpdate,
 }
