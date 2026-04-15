@@ -1,5 +1,7 @@
+const ConflictError = require("../errors/ConflictError");
 const NotFoundError = require("../errors/NotFoundError");
 const prisma = require("../lib/prisma");
+const { Prisma } = require("@prisma/client")
 
 async function getCreateFolder(req, res, next) {
     try {
@@ -19,12 +21,17 @@ async function postFolder(req, res, next) {
                 user: {
                     connect: {
                         id: req.user.id,
-                    }
-                }
-            }
-        }); 
+                    },
+                },
+            },
+        });
         res.redirect("/");
     } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === "P2002") {
+                throw new ConflictError("folder name");
+            }
+        }
         next(err);
     }
 }

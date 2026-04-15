@@ -1,4 +1,6 @@
+const { Prisma } = require("@prisma/client");
 const prisma = require("../lib/prisma");
+const ConflictError = require("../errors/ConflictError");
 
 async function getFileUploadForm(req, res, next) {
     try {
@@ -33,6 +35,11 @@ async function postFile(req, res, next) {
         });
         folderId ? res.redirect(`/folder/${folderId}`) : res.redirect("/");
     } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === "P2002") {
+                throw new ConflictError("file name");
+            }
+        }
         next(err);
     }
 }
