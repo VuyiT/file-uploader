@@ -11,6 +11,7 @@ folderRouter.get("/:folderId/update", folderController.getUpdateForm);
 folderRouter.get("/:folderId", folderController.getViewFolder)
 folderRouter.get("/upload", fileController.getFileUploadForm);
 folderRouter.post("/upload", fileController.postFile);
+folderRouter.post("/:folderId/update", folderController.postUpdate);
 
 
 module.exports = folderRouter;
