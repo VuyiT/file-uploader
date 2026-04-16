@@ -5,5 +5,6 @@ const upload = multer({ dest: "uploads/" });
 
 fileRouter.get("/upload", fileController.getFileUploadForm);
 fileRouter.post("/upload", upload.single("uploadedFile"), fileController.postFile);
+fileRouter.get("/:fileId", fileController.getFileView);
 
 module.exports = fileRouter;
