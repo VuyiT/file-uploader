@@ -6,7 +6,7 @@
     <% if (locals.folder.files && folder.files.length > 0) { %>
         <ul>
             <% folder.files.forEach(file => { %>
-                <li><%= file.name %></li>
+                <li><a href="/folder/<%= folder.id %>/file/<%= file.id %>"><%= file.name %></a></li>
              <% }) %>
         </ul>
         <% } else { %>
