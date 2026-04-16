@@ -1,6 +1,7 @@
 const { Prisma } = require("@prisma/client");
 const prisma = require("../lib/prisma");
 const ConflictError = require("../errors/ConflictError");
+const NotFoundError = require("../errors/NotFoundError");
 
 async function getFileUploadForm(req, res, next) {
     try {
@@ -44,7 +45,27 @@ async function postFile(req, res, next) {
     }
 }
 
+async function getFileView(req, res, next) {
+    const file = await prisma.file.findUnique({ where: { id: Number(req.params.fileId) } });
+    const author = await prisma.user.findUnique({ where: { id: Number(req.user.id) } });
+    try {
+        res.render("view-file", {
+            title: file.name,
+            file,
+            author,
+        });;
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === "P2025") {
+                throw new NotFoundError("file");
+            }
+        }
+        next(err);
+    }
+}
+
 module.exports = {
     getFileUploadForm,
     postFile,
+    getFileView,
 }
