@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head") %>
+<body>
+    <h1><%= title %></h1>
+    <p><b>Type: </b><%= file.type %></p>
+    <p><b>Location: </b><%= file.path %></p>
+    <p><b>Size: </b><%= file.size %></p>
+    <p><b>Created: </b><%= file.uploadedAt.toLocaleDateString() %></p>
+    <p><b>Modified: </b><%= file.updatedAt.toLocaleDateString() %> by <%= author.firstName %> <%= author.lastName %></p>
+    <a href="/<%= file.path %>" download="<%= file.name %>"><button type="button">Download</button></a>
+</body>
+</html>
