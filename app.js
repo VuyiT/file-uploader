@@ -18,6 +18,7 @@ const PORT = process.env.PORT;
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(expressSession({
     cookie: {
         maxAge: 7 * 24 * 60 * 60 * 1000
@@ -54,7 +55,7 @@ app.use((req, res, next) => {
         if (type === "error") req.session.error_msg = msg;
     };
     next();
-})
+});
 
 app.use("/folder", folderRouter);
 app.use("/file", fileRouter);
